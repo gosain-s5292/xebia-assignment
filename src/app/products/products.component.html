@@ -1,0 +1,132 @@
+
+<header>
+    <div class="myrow">
+        <div class="mycol-lg-1 mycol-md-1 mycol-sm-1 mycol-xs-1">
+            <img src="../../assets/images/logo.png" style="width:64px;">
+        </div>
+        <div class="mycol-lg-1 mycol-md-1 mycol-sm-1 mycol-xs-1"></div>
+        <div class="mycol-lg-8 mycol-md-7 mycol-sm-6 mycol-xs-6" style="margin: auto;">
+            <div style="position: relative;" *ngIf="isSearchResultExists">
+                <img src="../../assets/images/back.png" class="search-back-arrow" (click)="showAllProducts();">
+            </div>
+            <div class="myrow">
+                <input class="text-input search-bar" type="text" name="search" placeholder="Search Products" (keyup)="onSearch($event)">
+            </div>        
+        </div>
+        <!-- <div class="mycol-md-1"></div> -->
+        <div class="mycol-lg-2 mycol-md-3 mycol-sm-4 mycol-xs-4 user-details-sec" >
+            <p>
+                <span>
+                    <img src="../../assets/images/user.png" style="width:22px;">
+                    <span class="user-name">{{ userData[0].fullName }}</span>
+                </span>
+            </p>
+            <p><img src="../../assets/images/supermarket.png"></p>
+        </div>
+    </div>
+</header>
+
+<div class="my-container">
+    <div class="left-sidebar" id="leftSideBar">
+        <span *ngIf="showSideBar" (click)="hideSideBarHandler()" style="position: absolute;left: 5px;top: 20px;"><img src="../../assets/images/left-arrow.png"></span>
+        <p class="filters">
+            <span>Filters</span>
+            <span (click)="showAllProducts()" style="cursor: pointer;"><img style="vertical-align: middle;width:18px;" src="../../assets/images/reset.png"><span >Reset</span></span>
+        </p>
+
+        <div class="color-filter-sec">
+            <p style="font-size: 14px;">Colour:</p>
+            <span *ngFor="let color of colorFilters" style="margin-bottom: 5px;margin-right:4px;display: inline-block;">
+                <span style="width:10px;height:10px;border:1px solid #ccc;" [ngStyle]="{'background-color': color.color}">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <input style="margin: 6px;" (change)="showFilteredResult($event, 'color');" type="checkbox" value="{{color.color}}" name="{{color.title}}">
+            </span>
+            
+        </div>
+
+        <div class="brand-filter-sec">
+            <p style="font-size: 14px;">Brand:</p>
+            <select name="brand-select" style="Width:100%;height:36px;" (change)="showFilteredResult($event, 'brand');">
+                <option value="0">Select Brand</option>
+                <option *ngFor="let brand of brandFilters" [value]="brand.value">{{ brand.title}}</option>
+            </select>
+        </div>
+
+        <div class="price-filter-sec">
+            <p style="font-size: 14px;">Price:</p>
+            <select style="width:40%;display: inline-block;" (change)="showFilteredResult($event, 'price');">
+                <option *ngFor="let price of priceFilters" [value]="price.key">
+                    {{ price.displayValue }}
+                </option>
+            </select>
+            &nbsp;&nbsp;
+            &nbsp;&nbsp;
+            <select style="width:40%;display: inline-block;">
+                <option *ngFor="let price of priceFilters" [value]="price.key">
+                    {{ price.displayValue == 'Min' ? 'Max': price.displayValue}}
+                </option>
+            </select>
+        </div>
+
+        <div class="discount-filter-sec">
+            <p style="font-size: 14px;">Discount:</p>
+            <select name="discount-select" style="width:40%;display: inline-block;">
+                <option value="min">Min</option>
+                <option value="10">10%</option>
+                <option value="20">20%</option>
+                <option value="30">30%</option>
+                <option value="40">40%</option>
+                <option value="50">50%</option>
+                <option value="60">60%</option>
+                <option value="70">70%</option>
+                <option value="80">80%</option>
+                <option value="90">90%</option>
+            </select>
+            &nbsp;&nbsp;
+            &nbsp;&nbsp;
+            <select name="discount-select" style="width:40%;display: inline-block;">
+                <option value="max">Max</option>
+                <option value="10">10%</option>
+                <option value="20">20%</option>
+                <option value="30">30%</option>
+                <option value="40">40%</option>
+                <option value="50">50%</option>
+                <option value="60">60%</option>
+                <option value="70">70%</option>
+                <option value="80">80%</option>
+                <option value="90">90%</option>
+            </select>
+        </div>
+    </div>
+    <div class="product-listing-container">        
+        <span *ngIf="hideSideBar" (click)="showSideBarHandler();" style="cursor:pointer;position: absolute;left: 5px;top: 20px;"><img src="../../assets/images/right-arrow.png"></span>        
+        <div class="row" *ngIf="showProductNotFound">
+            <p style="text-align: center;font-size: 20px;">
+                Product not found...
+            </p>
+        </div>
+        <div class="myrow" *ngIf=!showProductNotFound style="width:100%">
+            <div *ngFor="let item of products" class="mycol-lg-4 mycol-md-4 mycol-xs-12 mycol-sm-6 items-list">
+                <div class="product-item ">
+                    <div class="row" style="position: relative;">
+                        <img [src]="item.image">
+                        <span *ngIf="item.discount > 0" class="discount-box">{{ item.discount+'%' }}</span>
+                        <div class="product-details-sec row">
+                            <p style="margin:5px 0px;">
+                                <span style="width:70%;font-size: 12px;display: inline-block;font-weight: 600;">{{ item.title }}</span>
+                                <span style="font-size: 12px;display: inline-block;width:30%;text-align: right;"> color : <strong style="width:10px;height:10px;border-radius: 4px;" [ngStyle]="{'background-color': item.colour.color}">&nbsp; &nbsp; &nbsp;</strong></span>
+                            </p>
+                            <p style="margin:5px 0px;">
+                                <span style="width:70%;font-size: 12px;display: inline-block;">{{ 'Brand : '+item.brand }}</span>
+                            </p>
+                            <p style="margin:5px 0px;">
+                                <span style="width:70%;font-size: 12px;display: inline-block;">{{ 'Price : ₹'+item.price.final_price }}</span>
+                            </p>
+                        </div>                    
+                    </div>
+                    
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>
+

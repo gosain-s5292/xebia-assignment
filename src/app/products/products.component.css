@@ -1,0 +1,659 @@
+
+header{
+    box-shadow: 0px 2px 5px -5px;
+    background: #fff;
+    z-index: 999;
+    position:fixed;
+    width: 100%;
+}
+
+.text-input{
+    height: 34px;
+    margin: auto;
+    width: 100%;   
+    border-radius: 4px;     
+}
+
+.search-bar{
+    width: 90%;
+    padding: 5px 5px;
+}
+.search-back-arrow{
+    position: absolute;
+    top: 13px;
+    cursor: pointer;
+}
+
+
+.user-details-sec p{
+    margin: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-name{
+    
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 10px;
+    font-family: sans-serif;
+    vertical-align: super;
+}
+
+.left-sidebar{    
+    width: 245px;
+    position: fixed;
+    left: 0px;
+    height: 100%;
+    border-right: 1px solid #ccc;
+    top:78px;
+
+}
+
+.left-sidebar p.filters{
+    text-align: right;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0px;
+}    
+.left-sidebar p span{
+    width:40%;
+    display: inline-block;
+    font-size: 14px; font-weight:600;
+    padding-right: 10px;
+}
+
+.product-listing-container{
+    width:calc(100% - 264px);
+    height:100%;
+    margin-left: 264px;
+    display: inline-flex;
+    padding: 10px 0px;
+    position: relative;
+    top:75px;
+}
+
+.items-list{
+    max-height: 400px;
+    min-height: 340px;
+}
+
+
+.product-item{
+    /* border:1px solid #ccc; */
+    margin: 10px 15px;
+    padding: 0px 15px;
+    display: -webkit-box;
+}
+
+.product-item img{
+    width:50%;
+    padding: 10px 25%;
+    border: 1px solid #ccc;
+}
+
+.discount-box{
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    background: darkseagreen;
+    text-align: center;
+    border-radius: 50%;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: 700;
+}
+    
+.color-filter-sec, .brand-filter-sec, .price-filter-sec, .discount-filter-sec{
+    padding: 10px 10px;
+    border: 1px solid #ccc;
+    margin: 5px 3px;
+}
+
+    
+.myrow{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+@media only screen and (max-width: 576px) {
+    
+    .items-list{
+        max-height: 240px;
+        min-height: 200px;
+    }
+
+    .left-sidebar{
+        position: fixed;
+        left:-264px;
+    }
+
+    .product-listing-container{
+        width: calc(100% - 0px);
+        height: 100%;
+        margin-left: 0px;
+        display: inline-flex;
+        padding: 10px 0px;
+        position: relative;
+        top: 75px;
+    }
+
+    .left-sidebar:after{
+        content: '';
+        border:1px solid #ccc
+        
+    }
+
+    .mycol-xs-1{
+        
+        width:8.33%;
+        display: grid;
+        float: left;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-xs-2{
+        display: grid;
+        float: left;
+        width:16.67%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-xs-3{
+        display: grid;
+        float: left;
+        width:25%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-xs-4{
+        display: grid;
+        float: left;
+        width:33.33%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-xs-5{
+        display: grid;
+        float: left;
+        width:41.67%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-xs-6{
+        display: grid;
+        float: left;
+        width:50%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-xs-7{
+        display: grid;
+        float: left;
+        width:58.33%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-xs-8{
+        display: grid;
+        float: left;
+        width:66.67%;
+        padding: 10px 0px;
+    
+    }
+    
+    
+    .mycol-xs-9{
+        display: grid;
+        float: left;
+        width:75%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-xs-10{
+        display: grid;
+        float: left;
+        width:83.33%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-xs-11{
+        display: grid;
+        float: left;
+        width:91.17%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-xs-12{
+        display: grid;
+        float: left;
+        width:100%;
+        padding: 10px 0px;
+    
+    }
+    
+    
+}
+
+@media only screen and (min-width: 577px) and (max-width:768px) {
+    .mycol-sm-1{
+        
+        width:8.33%;
+        display: grid;
+        float: left;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-sm-2{
+        display: grid;
+        float: left;
+        width:16.67%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-sm-3{
+        display: grid;
+        float: left;
+        width:25%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-sm-4{
+        display: grid;
+        float: left;
+        width:33.33%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-sm-5{
+        display: grid;
+        float: left;
+        width:41.67%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-sm-6{
+        display: grid;
+        float: left;
+        width:50%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-sm-7{
+        display: grid;
+        float: left;
+        width:58.33%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-sm-8{
+        display: grid;
+        float: left;
+        width:66.67%;
+        padding: 10px 0px;
+    
+    }
+    
+    
+    .mycol-sm-9{
+        display: grid;
+        float: left;
+        width:75%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-sm-10{
+        display: grid;
+        float: left;
+        width:83.33%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-sm-11{
+        display: grid;
+        float: left;
+        width:91.17%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-sm-12{
+        display: grid;
+        float: left;
+        width:100%;
+        padding: 10px 0px;
+    
+    }
+    
+    
+}
+
+@media only screen and (min-width: 769px) and (max-width:992px){
+    
+    
+    .mycol-md-1{
+        
+        width:8.33%;
+        display: grid;
+        float: left;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-md-2{
+        display: grid;
+        float: left;
+        width:16.67%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-md-3{
+        display: grid;
+        float: left;
+        width:25%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-md-4{
+        display: grid;
+        float: left;
+        width:33.33%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-md-5{
+        display: grid;
+        float: left;
+        width:41.67%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-md-6{
+        display: grid;
+        float: left;
+        width:50%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-md-7{
+        display: grid;
+        float: left;
+        width:58.33%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-md-8{
+        display: grid;
+        float: left;
+        width:66.67%;
+        padding: 10px 0px;
+    
+    }
+    
+    
+    .mycol-md-9{
+        display: grid;
+        float: left;
+        width:75%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-md-10{
+        display: grid;
+        float: left;
+        width:83.33%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-md-11{
+        display: grid;
+        float: left;
+        width:91.17%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-md-12{
+        display: grid;
+        float: left;
+        width:100%;
+        padding: 10px 0px;
+    
+    }
+    
+}
+
+@media only screen and (min-width: 993px) and (max-width:1200px){
+
+    .mycol-lg-1{
+        
+        width:8.33%;
+        display: grid;
+        float: left;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-lg-2{
+        display: grid;
+        float: left;
+        width:16.67%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-lg-3{
+        display: grid;
+        float: left;
+        width:25%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-lg-4{
+        display: grid;
+        float: left;
+        width:33.33%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-lg-5{
+        display: grid;
+        float: left;
+        width:41.67%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-lg-6{
+        display: grid;
+        float: left;
+        width:50%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-lg-7{
+        display: grid;
+        float: left;
+        width:58.33%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-lg-8{
+        display: grid;
+        float: left;
+        width:66.67%;
+        padding: 10px 0px;
+    
+    }
+    
+    
+    .mycol-lg-9{
+        display: grid;
+        float: left;
+        width:75%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-lg-10{
+        display: grid;
+        float: left;
+        width:83.33%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-lg-11{
+        display: grid;
+        float: left;
+        width:91.17%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-lg-12{
+        display: grid;
+        float: left;
+        width:100%;
+        padding: 10px 0px;
+    
+    }
+    
+}
+
+@media only screen and (min-width: 1201px){
+    .mycol-lg-1{
+        
+        width:8.33%;
+        display: grid;
+        float: left;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-lg-2{
+        display: grid;
+        float: left;
+        width:16.67%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-lg-3{
+        display: grid;
+        float: left;
+        width:25%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-lg-4{
+        display: grid;
+        float: left;
+        width:33.33%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-lg-5{
+        display: grid;
+        float: left;
+        width:41.67%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-lg-6{
+        display: grid;
+        float: left;
+        width:50%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-lg-7{
+        display: grid;
+        float: left;
+        width:58.33%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-lg-8{
+        display: grid;
+        float: left;
+        width:66.67%;
+        padding: 10px 0px;
+    
+    }
+    
+    
+    .mycol-lg-9{
+        display: grid;
+        float: left;
+        width:75%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-lg-10{
+        display: grid;
+        float: left;
+        width:83.33%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-lg-11{
+        display: grid;
+        float: left;
+        width:91.17%;
+        padding: 10px 0px;
+    
+    }
+    
+    .mycol-lg-12{
+        display: grid;
+        float: left;
+        width:100%;
+        padding: 10px 0px;
+    
+    }
+}

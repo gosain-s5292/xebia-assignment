@@ -1,0 +1,10 @@
+/* You can add global styles to this file, and also import other style files */
+@font-face{
+    font-family: 'Trebuchet';
+    src: url(assets/font/trebuc.ttf);
+}
+
+body{
+    margin: 0px;
+    font-family: Trebuchet;
+}

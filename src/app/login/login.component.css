@@ -1,0 +1,86 @@
+.row{
+    width: 100%;
+    display: flex;
+    background: #fff;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    margin-bottom: 0px;
+    max-width: 100%;
+    margin: 0px;
+}   
+
+.login-box{
+    position: absolute;
+    margin: auto;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    display: flex;
+}
+
+.form-sec{
+  margin: auto;
+  width:40%;
+  padding: 20px;
+  box-shadow: 0px 0px 3px -1px;
+  border: 1px solid #ccc;
+}
+
+.form-group{
+  margin:20px 10px;
+}
+
+.text-field{
+  width: 75%;
+  height: 40px;
+  text-align: center;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  background: #ececec;
+}
+
+.company-heading{
+  text-align: left;
+  font-style:italic;
+  padding: 15px;
+}
+
+.login-btn-sec{
+  text-align: center;
+}
+
+.submit-btn{
+  height: 34px;
+  padding:10px 20px;
+  border-radius: 6px;
+  background : #fff;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+
+
+.error-message{
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  padding: 5px 0px;
+}
+
+.text-danger{
+  color:red;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.login-alert-unsuccess{
+  color:red;
+  font-size: 13px;
+  padding: 6px 0px;
+}
+
