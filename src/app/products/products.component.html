@@ -6,7 +6,7 @@
         </div>
         <div class="mycol-lg-1 mycol-md-1 mycol-sm-1 mycol-xs-1"></div>
         <div class="mycol-lg-8 mycol-md-7 mycol-sm-6 mycol-xs-6" style="margin: auto;">
-            <div class="search-back-arrow" style="position: relative;" *ngIf="isSearchResultExists">
+            <div style="position: relative;" *ngIf="isSearchResultExists">
                 <img src="../../assets/images/back.png" class="search-back-arrow" (click)="showAllProducts();">
             </div>
             <div class="myrow">
@@ -56,18 +56,21 @@
 
         <div class="price-filter-sec">
             <p style="font-size: 14px;">Price:</p>
-            <select style="width:40%;display: inline-block;" (change)="showFilteredResult($event, 'price');">
-                <option *ngFor="let price of priceFilters" [value]="price.key">
+            <select style="width:40%;display: inline-block;" id="min-price-filter">
+                <option *ngFor="let price of priceFilters" [value]="price.displayValue == 'Min' ? '0': price.key">
                     {{ price.displayValue }}
                 </option>
             </select>
             &nbsp;&nbsp;
             &nbsp;&nbsp;
-            <select style="width:40%;display: inline-block;">
-                <option *ngFor="let price of priceFilters" [value]="price.key">
+            <select style="width:40%;display: inline-block;" id="max-price-filter">
+                <option *ngFor="let price of priceFilters" [value]="price.displayValue == 'Min' ? '0': price.key">
                     {{ price.displayValue == 'Min' ? 'Max': price.displayValue}}
                 </option>
             </select>
+            <div class="myrow" style="text-align: right;display: grid;">
+                <button (click)="showFilteredResult($event, 'price');" class="mybtn mybtn-primary">Show</button>
+            </div>            
         </div>
 
         <div class="discount-filter-sec">

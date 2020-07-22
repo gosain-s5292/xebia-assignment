@@ -156,28 +156,22 @@ export class ProductsComponent implements OnInit {
     let _self = this;
     let productList:any = [];
     const value = $event.target.value;
-    
-    // filter on basis of product brand
-    if(type == 'brand'){
-      _self.filterDataByBrandName(value);
-    }
+     
+    switch(type){
+      case 'brand':  //// filter on basis of product brand
+        _self.filterDataByBrandName(value);
 
-    // filter data on basis of product colour
-    if(type == 'color'){
-      _self.filterDataByColor($event);      
-    }
-
-    // filter data on basis of product price
-    if(type == 'price'){
-      _self.filterDataByPrice(value);
-    }
-        
-    // filter data on basis of discount
-    if(type == 'discount'){
+      case 'color': //// filter data on basis of product colour
+        _self.filterDataByColor($event);      
       
+      case 'price': //// filter data on basis of product price                
+        _self.filterDataByPrice();
+      
+      case 'discount': 
+        // _self.filterDataByDiscount(value);
     }
 
-    //get checked brand filter objects
+    //get selected product on basis of brand data
     if(_self.productFilters[0].isChecked){
       
       _self.productFilters[0].values.map((item1:any)=>{
@@ -194,7 +188,8 @@ export class ProductsComponent implements OnInit {
 
       });
     }
-    // get colour filter data
+
+    // get product on basis od colour
     if(_self.productFilters[1].isChecked){
       _self.productFilters[1].values.map((item1:any)=>{
         if(item1.isChecked){
@@ -207,17 +202,39 @@ export class ProductsComponent implements OnInit {
         }
       });      
     }
-
-  // get price filter data 
+debugger;
+  // get product on basis of price 
     if(_self.productFilters[2].isChecked){
       _self.productFilters[2].values.map((item:any)=>{
-        if(item.isChecked){
-          let list =  _self.allProductList.filter((item)=>{
-            if(item.price.final_price == $event.target.value){
-              return item;
-            }            
-          });
-          Array.prototype.push.apply( productList, list);                 
+        if(item.isPriceChecked){
+
+          let minPriceEle:any = document.getElementById('min-price-filter');
+          let maxPriceEle:any = document.getElementById('max-price-filter');
+          let minPrice = Number(minPriceEle.value);
+          let maxPrice =  maxPriceEle.value.indexOf('+')>0 ? 4001:  Number(maxPriceEle.value);
+          debugger;
+          if(minPrice > 0  && maxPrice == 0){
+            let list =  _self.allProductList.filter((item)=>{
+              if(item.price.final_price >= minPrice){
+                return item;
+              }            
+            });
+            Array.prototype.push.apply( productList, list);
+          }else if(minPrice == 0 && maxPrice > 0){
+            let list =  _self.allProductList.filter((item)=>{
+              if(item.price.final_price <= maxPrice){
+                return item;
+              }
+            });
+            Array.prototype.push.apply( productList, list);
+          }else if(minPrice != 0 && minPrice != 0 ){
+            let list =  _self.allProductList.filter((item)=>{
+              if(item.price.final_price >= minPrice && item.price.final_price <= maxPrice){
+                return item;
+              }            
+            });
+            Array.prototype.push.apply( productList, list);
+          }
         }
       });      
     }
@@ -278,14 +295,50 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  filterDataByPrice(value){
+  filterDataByPrice(){
     let _self = this;
-    _self.productFilters[2].isChecked = false;
-    _self.productFilters[2].values.map((item:any)=>{
-      if (item.key == value){
-        item.isChecked = true;
-      }
-    })      
+
+    let minPriceEle:any = document.getElementById('min-price-filter');
+    let maxPriceEle:any = document.getElementById('max-price-filter');
+    let minPrice = Number(minPriceEle.value);
+    let maxPrice =  maxPriceEle.value.indexOf('+')>0 ? 4001:  Number(maxPriceEle.value);
+    debugger;
+    if((minPrice > maxPrice) && (minPrice && maxPrice)){
+      alert('minimum price must be less than max price');
+      return;
+    }
+
+    if(minPrice > 0  && maxPrice == 0){
+      _self.productFilters[2].isChecked = true;
+      _self.productFilters[2].values.map((item:any)=>{
+        item.isPriceChecked = false;
+        if (item.key == minPrice){
+          item.isPriceChecked = true;
+        }
+      });
+    }else if(minPrice == 0 && maxPrice > 0){
+      _self.productFilters[2].isChecked = true;
+      _self.productFilters[2].values.map((item:any)=>{
+        item.isPriceChecked = false;
+        if (item.key == maxPrice){
+          item.isPriceChecked = true;
+        }
+      });
+    }else if(minPrice != 0 && minPrice != 0 ){
+      _self.productFilters[2].isChecked = true;
+      _self.productFilters[2].values.map((item:any)=>{
+        item.isPriceChecked = false;
+        if ((item.key == minPrice) || item.key == maxPrice){
+          item.isPriceChecked = true;
+        }
+      });
+    }else{
+      _self.productFilters[2].isChecked = false;
+      _self.productFilters[2].values.map((item:any)=>{
+        item.isPriceChecked = false;
+      });      
+      alert("please select price to filter data");
+    }    
   }
   
 
