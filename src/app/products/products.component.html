@@ -41,14 +41,14 @@
             <p style="font-size: 14px;">Colour:</p>
             <span *ngFor="let color of colorFilters" style="margin-bottom: 5px;margin-right:4px;display: inline-block;">
                 <span style="width:10px;height:10px;border:1px solid #ccc;" [ngStyle]="{'background-color': color.color}">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <input style="margin: 6px;" (change)="showFilteredResult($event, 'color');" type="checkbox" value="{{color.color}}" name="{{color.title}}">
+                <input style="margin: 6px;" (change)="showFilteredResult($event, 'color');" class="color-filters" type="checkbox" value="{{color.color}}" name="{{color.title}}">
             </span>
             
         </div>
 
         <div class="brand-filter-sec">
             <p style="font-size: 14px;">Brand:</p>
-            <select name="brand-select" style="Width:100%;height:36px;" (change)="showFilteredResult($event, 'brand');">
+            <select name="brand-select" id="brand-filter" style="Width:100%;height:36px;" (change)="showFilteredResult($event, 'brand');">
                 <option value="0">Select Brand</option>
                 <option *ngFor="let brand of brandFilters" [value]="brand.value">{{ brand.title}}</option>
             </select>
@@ -75,8 +75,8 @@
 
         <div class="discount-filter-sec">
             <p style="font-size: 14px;">Discount:</p>
-            <select name="discount-select" style="width:40%;display: inline-block;">
-                <option value="min">Min</option>
+            <select name="discount-select" style="width:40%;display: inline-block;" id="min-discount-filter">
+                <option value="0">Min</option>
                 <option value="10">10%</option>
                 <option value="20">20%</option>
                 <option value="30">30%</option>
@@ -89,8 +89,8 @@
             </select>
             &nbsp;&nbsp;
             &nbsp;&nbsp;
-            <select name="discount-select" style="width:40%;display: inline-block;">
-                <option value="max">Max</option>
+            <select name="discount-select" style="width:40%;display: inline-block;" id="max-discount-filter">
+                <option value="0">Max</option>
                 <option value="10">10%</option>
                 <option value="20">20%</option>
                 <option value="30">30%</option>
@@ -101,6 +101,10 @@
                 <option value="80">80%</option>
                 <option value="90">90%</option>
             </select>
+
+            <div class="myrow" style="text-align: right;display: grid;">
+                <button (click)="showFilteredResult($event, 'discount');" class="mybtn mybtn-primary">Show</button>
+            </div>
         </div>
     </div>
     <div class="product-listing-container">        

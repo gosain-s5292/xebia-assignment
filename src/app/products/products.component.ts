@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService } from '../services/products.service';
 import { map } from 'rxjs/operators';
-import { debug } from 'util';
+import _ from 'underscore';
 
 @Component({
   selector: 'app-products',
@@ -35,15 +35,17 @@ export class ProductsComponent implements OnInit {
   public count : number = 0;
 
   ngOnInit() {
-
+    let _self = this;
     if(sessionStorage.getItem('userData')){
       this.userData = JSON.parse(sessionStorage.getItem('userData'));
 
       // Get Product Listing
-      this.getProductList();  
+      this.getProductList(function(status){
+        _self.getProductFilters();  
+      });  
       
       // Get Product Filter List
-      this.getProductFilters();  
+      
       
       if(window.innerWidth <=576){
         this.hideSideBar = true;
@@ -157,18 +159,22 @@ export class ProductsComponent implements OnInit {
     let productList:any = [];
     const value = $event.target.value;
      
-    switch(type){
+    switch(type){      
       case 'brand':  //// filter on basis of product brand
         _self.filterDataByBrandName(value);
-
+        break;
       case 'color': //// filter data on basis of product colour
         _self.filterDataByColor($event);      
-      
+        break;
       case 'price': //// filter data on basis of product price                
         _self.filterDataByPrice();
-      
+        break;
       case 'discount': 
-        // _self.filterDataByDiscount(value);
+        _self.filterDataByDiscount();
+        break;
+      default :      
+        _self.showAllProducts(); 
+        break;
     }
 
     //get selected product on basis of brand data
@@ -202,7 +208,7 @@ export class ProductsComponent implements OnInit {
         }
       });      
     }
-debugger;
+
   // get product on basis of price 
     if(_self.productFilters[2].isChecked){
       _self.productFilters[2].values.map((item:any)=>{
@@ -212,7 +218,6 @@ debugger;
           let maxPriceEle:any = document.getElementById('max-price-filter');
           let minPrice = Number(minPriceEle.value);
           let maxPrice =  maxPriceEle.value.indexOf('+')>0 ? 4001:  Number(maxPriceEle.value);
-          debugger;
           if(minPrice > 0  && maxPrice == 0){
             let list =  _self.allProductList.filter((item)=>{
               if(item.price.final_price >= minPrice){
@@ -238,8 +243,49 @@ debugger;
         }
       });      
     }
+
+    //  get product list on basis of discount
+    if(_self.productFilters[3].isChecked){
+      _self.productFilters[3].values.map((item:any)=>{
+        
+        if(item.isDiscountChecked){
+          let minDiscountEle:any = document.getElementById('min-discount-filter');
+          let maxdiscountEle:any = document.getElementById('max-discount-filter');
+          let minDiscount = minDiscountEle.value;
+          let maxDiscount = maxdiscountEle.value;
+          
+          if(minDiscount > 0  && maxDiscount == 0){
+            let list =  _self.allProductList.filter((item)=>{
+              if(item.discount >= minDiscount){
+                return item;
+              }            
+            });
+            Array.prototype.push.apply( productList, list);
+          }else if(minDiscount == 0 && maxDiscount > 0){
+            let list =  _self.allProductList.filter((item)=>{
+              if(item.discount <= maxDiscount){
+                return item;
+              }
+            });
+            Array.prototype.push.apply( productList, list);
+          }else if(minDiscount != 0 && minDiscount != 0 ){
+            let list =  _self.allProductList.filter((item)=>{
+              if(item.discount >= minDiscount && item.discount <= maxDiscount){
+                return item;
+              }            
+            });
+            Array.prototype.push.apply( productList, list);
+          }
+        }
+        
+      });      
+    }
     
     if(productList.length){
+      productList = _.uniq(productList, function(item){
+        return item;
+      })
+      
       _self.applyFilter(productList);  
     }else{
       _self.applyFilter(_self.allProductList);  
@@ -300,9 +346,10 @@ debugger;
 
     let minPriceEle:any = document.getElementById('min-price-filter');
     let maxPriceEle:any = document.getElementById('max-price-filter');
-    let minPrice = Number(minPriceEle.value);
+    
+    let minPrice = minPriceEle.value;
     let maxPrice =  maxPriceEle.value.indexOf('+')>0 ? 4001:  Number(maxPriceEle.value);
-    debugger;
+
     if((minPrice > maxPrice) && (minPrice && maxPrice)){
       alert('minimum price must be less than max price');
       return;
@@ -340,6 +387,54 @@ debugger;
       alert("please select price to filter data");
     }    
   }
+
+  filterDataByDiscount(){
+    let _self = this;
+    let minDiscountEle:any = document.getElementById('min-discount-filter');
+    let maxDiscountEle:any = document.getElementById('max-discount-filter');
+
+    let minDiscount = minDiscountEle.value;
+    let maxDiscount =  maxDiscountEle.value.indexOf('+')>0 ? 4001:  Number(maxDiscountEle.value);
+
+    if((minDiscount > maxDiscount) && (minDiscount && maxDiscount)){
+      alert('minimum Discount must be less than max Discount');
+      return;
+    }    
+
+    if(minDiscount > 0  && maxDiscount == 0){
+      _self.productFilters[3].isChecked = true;            
+      _self.productFilters[3].values.map((item:any)=>{
+        item.isDiscountChecked = false;
+        if (item.value == minDiscount){
+          item.isDiscountChecked = true;
+        }
+      });
+    }else if(minDiscount == 0 && maxDiscount > 0){
+      _self.productFilters[3].isChecked = true;
+      _self.productFilters[3].values.map((item:any)=>{
+        item.isDiscountChecked = false;
+        if (item.value == maxDiscount){
+          item.isDiscountChecked = true;
+        }
+      });
+      
+    }else if(minDiscount != 0 && maxDiscount != 0 ){
+      _self.productFilters[3].isChecked = true;      
+      _self.productFilters[2].values.map((item:any)=>{
+        item.isDiscountChecked = false;
+        if ((item.value == minDiscount) || item.key == maxDiscount){
+          item.isDiscountChecked = true;
+        }
+      });
+    }else{
+      _self.productFilters[3].isChecked = false;      
+      _self.productFilters[3].values.map((item:any)=>{
+        item.isDiscountChecked = false;
+      });      
+      alert("please select Discount to filter data");
+    }
+
+  }
   
 
   applyFilter(filteredList){
@@ -353,11 +448,33 @@ debugger;
     if(_self.allProductList){      
       _self.products = JSON.parse(sessionStorage.getItem('allProducts'));
     }else{
-      _self.getProductList();
+      _self.getProductList(function(){      
+      });
     }    
+
+    var ele:any = document.getElementById('brand-filter');
+    ele.value = "0";
+    
+    ele = document.getElementById('min-price-filter');
+    ele.value = "0";
+
+    ele = document.getElementById('max-price-filter');
+    ele.value = "0"
+    
+    ele = document.getElementById('min-discount-filter');
+    ele.value = "0"
+
+    ele= document.getElementById('max-discount-filter');
+    ele.value = "0"
+    ele = document.getElementsByClassName('color-filters');
+    
+    _.each(ele, function(item){
+        item.checked = false;
+    })
+
   }
 
-  getProductList(){
+  getProductList(callback){
     let _self = this;
     this.productService.getProductListing().subscribe(
       (data:any)=>{
@@ -375,11 +492,12 @@ debugger;
         }else{
           _self.allProductList = null;
           _self.showProductNotFound = true;
-        }        
+        }     
+        callback(true);   
       },
       (error)=>{
         _self.showProductNotFound = true;
-
+        callback(false);
       }
     )
   }
@@ -392,7 +510,17 @@ debugger;
         _self.colorFilters = _self.productFilters[1].values;
         _self.brandFilters = _self.productFilters[0].values
         _self.priceFilters = _self.productFilters[2].values;
+        
+        let discountArray = _.map(_self.allProductList, function(item){
+          return { value: item.discount};
+        });
+        
+        let uniqDiscount = _.uniq(discountArray, function(item){
+          return item.value;
+        })
 
+
+        _self.productFilters[3] = {type:'discount', values:uniqDiscount};
         _self.productFilters = _self.productFilters.map((item:any) => {
             item.values.map((subItem:any) => {  
               subItem.isChecked = false;
