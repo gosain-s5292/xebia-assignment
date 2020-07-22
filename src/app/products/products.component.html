@@ -6,7 +6,7 @@
         </div>
         <div class="mycol-lg-1 mycol-md-1 mycol-sm-1 mycol-xs-1"></div>
         <div class="mycol-lg-8 mycol-md-7 mycol-sm-6 mycol-xs-6" style="margin: auto;">
-            <div style="position: relative;" *ngIf="isSearchResultExists">
+            <div class="search-back-arrow" style="position: relative;" *ngIf="isSearchResultExists">
                 <img src="../../assets/images/back.png" class="search-back-arrow" (click)="showAllProducts();">
             </div>
             <div class="myrow">
@@ -21,7 +21,10 @@
                     <span class="user-name">{{ userData[0].fullName }}</span>
                 </span>
             </p>
-            <p><img src="../../assets/images/supermarket.png"></p>
+            <p class="cart-item-box">
+                <img src="../../assets/images/supermarket.png">
+                <span *ngIf="count > 0" class="cart-item">{{count}}</span>
+            </p>
         </div>
     </div>
 </header>
@@ -104,19 +107,29 @@
                 Product not found...
             </p>
         </div>
-        <div class="myrow" *ngIf=!showProductNotFound style="width:100%">
-            <div *ngFor="let item of products" class="mycol-lg-4 mycol-md-4 mycol-xs-12 mycol-sm-6 items-list">
+        <div class="myrow" *ngIf=!showProductNotFound style="width:100%;margin-top:28px;">
+            <div *ngFor="let item of products" class="mycol-lg-4 mycol-md-6 mycol-xs-12 mycol-sm-12 items-list">
                 <div class="product-item ">
                     <div class="row" style="position: relative;">
-                        <img [src]="item.image">
+                        <img class="product-img" [src]="item.image">
                         <span *ngIf="item.discount > 0" class="discount-box">{{ item.discount+'%' }}</span>
                         <div class="product-details-sec row">
                             <p style="margin:5px 0px;">
                                 <span style="width:70%;font-size: 12px;display: inline-block;font-weight: 600;">{{ item.title }}</span>
-                                <span style="font-size: 12px;display: inline-block;width:30%;text-align: right;"> color : <strong style="width:10px;height:10px;border-radius: 4px;" [ngStyle]="{'background-color': item.colour.color}">&nbsp; &nbsp; &nbsp;</strong></span>
+                                <span style="font-size: 12px;display: inline-block;width:30%;text-align: right;"> color : <strong style="width:13px;height:13px;border-radius: 4px;display: inline-flex;" [ngStyle]="{'background-color': item.colour.color}">&nbsp; &nbsp; &nbsp;</strong></span>
                             </p>
                             <p style="margin:5px 0px;">
                                 <span style="width:70%;font-size: 12px;display: inline-block;">{{ 'Brand : '+item.brand }}</span>
+                                <span style="display: inline-block;width:30%;font-size:12px;text-align: right;cursor: pointer;">
+                                    <span id="{{ item.id }}}" (click)="addItemToCart(item.id);" *ngIf="!item.isadded">
+                                        <img style="width: 16px;padding: 2px 5px;" src="../../assets/images/plus.png">
+                                        <span style="vertical-align: super;">Add</span>
+                                    </span>
+                                    <span id="{{ item.id }}}" (click)="removeItemFromCart(item.id);" *ngIf="item.isadded" >
+                                        <img style="width: 16px;padding: 2px 5px;" src="../../assets/images/minus.png">
+                                        <span style="vertical-align: super;">Remove</span>
+                                    </span>
+                                </span>
                             </p>
                             <p style="margin:5px 0px;">
                                 <span style="width:70%;font-size: 12px;display: inline-block;">{{ 'Price : ₹'+item.price.final_price }}</span>

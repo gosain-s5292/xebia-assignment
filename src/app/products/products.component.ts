@@ -32,6 +32,7 @@ export class ProductsComponent implements OnInit {
 
   public showSideBar:boolean = false;
   public hideSideBar:boolean = true;
+  public count : number = 0;
 
   ngOnInit() {
 
@@ -44,15 +45,61 @@ export class ProductsComponent implements OnInit {
       // Get Product Filter List
       this.getProductFilters();  
       
-      if(window.outerWidth <=576){
+      if(window.innerWidth <=576){
         this.hideSideBar = true;
       }else{
         this.hideSideBar = false;
       }
+
+      window.addEventListener('resize', this.reportWindowSize);
     }else{
       this.router.navigate(["/login"]);
     }
 
+  }
+
+  reportWindowSize(){
+    
+    if(window.innerWidth <=576){
+      this.hideSideBar = true;
+    }else{
+      this.hideSideBar = false;
+    }
+
+  }
+
+  addItemToCart(id){
+    let _self = this;
+    _self.count = 0;
+    _self.allProductList.map((item)=>{
+      if(item.id == id){
+        item.isadded = true;
+      }
+
+      if(item.isadded){
+        _self.count = _self.count + 1;
+      }
+      return item;
+    });
+
+  }
+
+  removeItemFromCart(id){
+    let _self = this;
+    _self.count = 0;
+    _self.allProductList.map((item)=>{      
+
+      if(item.isadded){
+        _self.count = _self.count + 1;
+      }
+
+      if(item.id == id){
+        item.isadded = false;
+        _self.count = _self.count - 1;
+      }
+
+      return item;
+    });
   }
 
   showSideBarHandler(){
@@ -260,8 +307,13 @@ export class ProductsComponent implements OnInit {
   getProductList(){
     let _self = this;
     this.productService.getProductListing().subscribe(
-      (data)=>{
+      (data:any)=>{
         _self.allProductList = data;
+        _self.allProductList = data.map((item:any)=>{
+            item.isadded = false;
+            return item;
+        });
+
         _self.products = data;
 
         if(_self.products.length){
