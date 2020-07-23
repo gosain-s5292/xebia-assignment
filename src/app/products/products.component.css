@@ -54,6 +54,24 @@ header{
 
 }
 
+.left-sidebar::-webkit-scrollbar {
+    width: 3.34px;
+	/* You can add other properties & values */
+}
+
+.left-sidebar::-webkit-scrollbar-track {
+    background-color: #ccc;    
+	/* You can add other properties & values */
+}
+
+.left-sidebar::-webkit-scrollbar-thumb {
+	background: #6b2858
+    ;
+    outline: 1px solid #6b2858
+    ;
+	/* You can add other properties & values */
+}
+
 .left-sidebar p.filters{
     text-align: right;
     border-bottom: 1px solid #ccc;
@@ -143,9 +161,10 @@ header{
 }
 
 .mybtn-primary{
-    background-color: cornflowerblue;
+    background-color: #6b2858
+    ;
     border: 0px;
-    box-shadow: 0px 0px 7px -3px cornflowerblue;
+    box-shadow: 0px 0px 7px -3px #6b2858;
     padding: 8px 10px;
     margin: 10px 0px;
     cursor: pointer;
